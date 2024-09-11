@@ -21,14 +21,8 @@ class King(Piece):
 class Queen(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
         out: list[tuple[int, int]] = []
-        for mod in range(-7, 8):
-            if mod == 0: continue
-            out.append((x + mod, y + mod))
-            out.append((x - mod, y + mod))
-            out.append((x + mod, y - mod))
-            out.append((x - mod, y - mod))
-            out.append((x + mod, y))
-            out.append((x, y + mod))
+        out.extend(Bishop().get_moveset(0, 0))
+        out.extend(Rook().get_moveset(0, 0))
         return out
 
 
