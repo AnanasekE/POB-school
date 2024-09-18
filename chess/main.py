@@ -52,4 +52,4 @@ class Board:
 
 board = Board()
 board.print_board()
-print(board.get_field_for_pos(7, 6).piece)
+# print(board.get_field_for_pos(7, 6).piece)
