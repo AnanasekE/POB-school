@@ -17,6 +17,9 @@ class King(Piece):
                 out.append((x, y))
         return out
 
+    def __str__(self):
+        return "King"
+
 
 class Queen(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -24,6 +27,9 @@ class Queen(Piece):
         out.extend(Bishop().get_moveset(0, 0))
         out.extend(Rook().get_moveset(0, 0))
         return out
+
+    def __str__(self):
+        return "Quee"
 
 
 class Knight(Piece):
@@ -37,6 +43,9 @@ class Knight(Piece):
                 (x - 2, y + 1),
                 (x - 2, y + 2)]
 
+    def __str__(self):
+        return "Knig"
+
 
 class Pawn(Piece):
     def __init__(self):
@@ -48,6 +57,9 @@ class Pawn(Piece):
             out.append((x, y + 2))
         return out
 
+    def __str__(self):
+        return "Pawn"
+
 
 class Rook(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -57,6 +69,9 @@ class Rook(Piece):
             out.append((x + mod, y))
             out.append((x, y + mod))
         return out
+
+    def __str__(self):
+        return "Rook"
 
 
 class Bishop(Piece):
@@ -69,3 +84,6 @@ class Bishop(Piece):
             out.append((x + mod, y - mod))
             out.append((x - mod, y - mod))
         return out
+
+    def __str__(self):
+        return "Bish"
