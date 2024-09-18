@@ -43,9 +43,10 @@ class Pawn(Piece):
         self.has_moved: bool = False
 
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
-        if self.has_moved:
-            return [(x, y + 1)]
-        return [(x, y + 1), (x, y + 2)]
+        out = [(x, y + 1), (x + 1, y + 1), (x - 1, y + 1)]
+        if not self.has_moved:
+            out.append((x, y + 2))
+        return out
 
 
 class Rook(Piece):
