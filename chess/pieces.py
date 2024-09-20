@@ -7,9 +7,14 @@ class Piece:
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
         pass
 
-    @abstractmethod
     def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        pass
+        tiles = [[(x, y) for y in range(y1, y2)] for x in range(x1, x2)]
+        out: list[tuple[int, int]] = []
+        for list_of_tiles in tiles:
+            for tile in list_of_tiles:
+                if tile in self.get_moveset(x1, y1):
+                    out.append(tile)
+        return out
 
 
 class King(Piece):
@@ -24,9 +29,6 @@ class King(Piece):
     def __str__(self):
         return "King"
 
-    def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        return []
-
 
 class Queen(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -37,9 +39,6 @@ class Queen(Piece):
 
     def __str__(self):
         return "Quee"
-
-    def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        return []
 
 
 class Knight(Piece):
@@ -73,9 +72,6 @@ class Pawn(Piece):
     def __str__(self):
         return "Pawn"
 
-    def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        return []
-
 
 class Rook(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -89,8 +85,7 @@ class Rook(Piece):
     def __str__(self):
         return "Rook"
 
-    def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        pass
+
 class Bishop(Piece):
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
         out: list[tuple[int, int]] = []
@@ -104,6 +99,3 @@ class Bishop(Piece):
 
     def __str__(self):
         return "Bish"
-
-    def get_moves_between(self, x1: int, y1: int, x2: int, y2: int) -> list[tuple[int, int]]:
-        return []

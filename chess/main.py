@@ -45,11 +45,12 @@ class Board:
 
         return True
 
-
     def get_field_for_pos(self, x: int, y: int) -> Field:
+        # return self.grid[8 - y][(7 + x) % 8] # this will work for player interaction
         return self.grid[y][x]
 
 
 board = Board()
 board.print_board()
-# print(board.get_field_for_pos(7, 6).piece)
+print(board.get_field_for_pos(4, 1).piece)
+# print(Rook().get_moves_between(3, 2, 5, 7))
