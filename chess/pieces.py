@@ -1,7 +1,16 @@
 from abc import abstractmethod
+from enum import Enum
+
+
+class Color(Enum):
+    WHITE = -1
+    BLACK = 1
 
 
 class Piece:
+
+    def __init__(self, color: Color):
+        self.color = color
 
     @abstractmethod
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
@@ -60,13 +69,15 @@ class Knight(Piece):
 
 
 class Pawn(Piece):
-    def __init__(self):
+    def __init__(self, color: Color):
+        super().__init__(color)
         self.has_moved: bool = False
 
     def get_moveset(self, x: int, y: int) -> list[tuple[int, int]]:
-        out = [(x, y + 1), (x + 1, y + 1), (x - 1, y + 1)]
+        out = [(x, y + (1 * self.color.value)), (x + 1, y + (1 * self.color.value)),
+               (x - 1, y + (1 * self.color.value))]
         if not self.has_moved:
-            out.append((x, y + 2))
+            out.append((x, y + (2 * self.color.value)))
         return out
 
     def __str__(self):
