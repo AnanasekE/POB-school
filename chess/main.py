@@ -11,7 +11,7 @@ class Board:
     def __init__(self):
         self.grid = [
             [Field(Rook(Color.BLACK)), Field(Knight(Color.BLACK)), Field(Bishop(Color.BLACK)),
-             Field(Queen(Color.WHITE)),
+             Field(Queen(Color.BLACK)),
              Field(King(Color.BLACK)), Field(Bishop(Color.BLACK)), Field(Knight(Color.BLACK)),
              Field(Rook(Color.BLACK))],
             [Field(Pawn(Color.BLACK)) for _ in range(8)],
@@ -68,8 +68,9 @@ class Board:
         return True
 
     def make_move(self, pre_x, pre_y, post_x, post_y):
-        if not board.is_valid_move(pre_x, pre_y, post_x,post_y) : return
-        board.get_field(post_x, post_y).piece = board.get_field(pre_x,pre_y)
+        if not board.is_valid_move(pre_x, pre_y, post_x, post_y): return
+        # TODO: make a capture notification
+        board.get_field(post_x, post_y).piece = board.get_field(pre_x, pre_y).piece
         board.get_field(pre_x, pre_y).piece = None
 
     def get_field(self, x: int, y: int) -> Field:
@@ -91,12 +92,5 @@ class Board:
 
 board = Board()
 board.print_board()
-# print(board.get_field_from_notation(1, 7).piece)
-# print(board.get_field_from_notation(1, 6).piece)
-# print(board.is_valid_move(1, 6, 1, 5))
-# print(board.is_valid_move(*board.get_tuple_notaion("D", 7), *board.get_tuple_notaion("D", 6)))
-# print(
-#     board.get_field_from_notation(*board.get_tuple_notaion("D", 3)).piece.get_moveset(*board.get_tuple_notaion("D", 7)))
-# print(True)
-print(colorama.Fore.BLACK + "Bussin")
-print("\033[94m WHAT DA HEEEEl")
+board.make_move(*board.get_tuple_notaion("D", 7), *board.get_tuple_notaion("D", 6))
+board.print_board()
