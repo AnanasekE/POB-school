@@ -1,10 +1,6 @@
-from tempfile import gettempdir
-
-import colorama
-
 from chess.exceptions import InvalidMoveException
 from chess.field import Field
-from chess.pieces import Rook, Knight, Bishop, Queen, King, Pawn, Piece, Color
+from chess.pieces import Rook, Knight, Bishop, Queen, King, Pawn, Color
 
 
 class Board:
@@ -50,7 +46,8 @@ class Board:
             raise InvalidMoveException()
         if post_field.piece is not None:
             # print("end has a piece already")
-            raise InvalidMoveException()
+            # raise PieceBeatenException(post_field.piece)
+            pass
 
         moves = pre_field.piece.get_moveset(pre_x, pre_y)
         # print(moves)
@@ -64,14 +61,17 @@ class Board:
             if self.get_field(x_move, y_move) is not None:
                 # print("a field is occupied")
                 raise InvalidMoveException()
-
         return True
 
     def make_move(self, pre_x, pre_y, post_x, post_y):
-        if not board.is_valid_move(pre_x, pre_y, post_x, post_y): return
+        if not self.is_valid_move(pre_x, pre_y, post_x, post_y): return
+        if self.get_field(pre_x, pre_y).piece is Pawn:
+            pawn: Pawn = self.get_field(pre_x, pre_y).piece
+            if not pawn.has_moved:
+                pawn.has_moved = True
         # TODO: make a capture notification
-        board.get_field(post_x, post_y).piece = board.get_field(pre_x, pre_y).piece
-        board.get_field(pre_x, pre_y).piece = None
+        self.get_field(post_x, post_y).piece = self.get_field(pre_x, pre_y).piece
+        self.get_field(pre_x, pre_y).piece = None
 
     def get_field(self, x: int, y: int) -> Field:
         return self.grid[y][x]
@@ -89,8 +89,10 @@ class Board:
         number = int(notation[1])
         return self.get_tuple_notaion(letter, number)
 
-
-board = Board()
-board.print_board()
-board.make_move(*board.get_tuple_notaion("D", 7), *board.get_tuple_notaion("D", 6))
-board.print_board()
+    # def get_field_from_better_notation(self, notation: str):
+    #     return self.get_field_from_notation(self.get_better_tuple_notation(notation))
+# board = Board()
+# board.print_board()
+# board.make_move(*board.get_tuple_notaion("D", 7), *board.get_tuple_notaion("D", 6))
+# board.make_move(*board.get_better_tuple_notation("D7"), *board.get_better_tuple_notation("D6"))
+# board.print_board()
