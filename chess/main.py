@@ -44,7 +44,7 @@ class Board:
         if pre_field.piece is None:
             # print("pre piece not exists")
             raise InvalidMoveException()
-        if post_field.piece is not None:
+        if post_field.piece:
             # print("end has a piece already")
             # raise PieceBeatenException(post_field.piece)
             pass
@@ -88,11 +88,3 @@ class Board:
         letter = notation[0]
         number = int(notation[1])
         return self.get_tuple_notaion(letter, number)
-
-    # def get_field_from_better_notation(self, notation: str):
-    #     return self.get_field_from_notation(self.get_better_tuple_notation(notation))
-# board = Board()
-# board.print_board()
-# board.make_move(*board.get_tuple_notaion("D", 7), *board.get_tuple_notaion("D", 6))
-# board.make_move(*board.get_better_tuple_notation("D7"), *board.get_better_tuple_notation("D6"))
-# board.print_board()

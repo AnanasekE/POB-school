@@ -9,7 +9,7 @@ class Color(Enum):
 
 class Piece:
 
-    def __init__(self, color: Color):
+    def __init__(self, color: Color = Color.WHITE):
         self.color = color
 
     @abstractmethod
