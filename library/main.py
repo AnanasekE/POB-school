@@ -104,3 +104,6 @@ except BookAlreadyBorrowedException:
 
 print("Printing all titles")
 library.print_books()
+
+library.return_book(book2.book_id)
+assert book2.book_id not in library.borrowed_books.get(user2.user_id)
