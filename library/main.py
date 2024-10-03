@@ -18,6 +18,9 @@ class Book:
         self.year: int = year
         self.genre: str = genre
 
+    def __str__(self):
+        return f"id: {self.book_id}, title: {self.title}, author: {self.author}, year: {self.year}"
+
 
 class User:
     def __init__(self, user_id: int, name: str, surname: str, phone: str):
@@ -63,7 +66,8 @@ class Library:
 
     def print_books(self):
         for key in self.books.keys():
-            print(key)
+            for book in self.books.get(key):
+                print(book)
 
 
 user1 = User(0, "Jan", "Kowalski", "123456789")
