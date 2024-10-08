@@ -11,23 +11,29 @@ class BookAlreadyBorrowedException(Exception):
 
 
 class Book:
-    def __init__(self, book_id: int, title: str, author: str, year: int, genre: str):
-        self.book_id: int = book_id
+    book_id_counter = 0
+
+    def __init__(self, title: str, author: str, year: int, genre: str):
+        self.book_id: int = Book.book_id_counter
         self.title: str = title
         self.author: str = author
         self.year: int = year
         self.genre: str = genre
+        Book.book_id_counter += 1
 
     def __str__(self):
         return f"id: {self.book_id}, title: {self.title}, author: {self.author}, year: {self.year}"
 
 
 class User:
-    def __init__(self, user_id: int, name: str, surname: str, phone: str):
-        self.user_id: int = user_id
+    user_id_counter = 0
+
+    def __init__(self, name: str, surname: str, phone: str):
+        self.user_id: int = User.user_id_counter
         self.name: str = name
         self.surname: str = surname
         self.phone: str = phone
+        User.user_id_counter += 1
 
 
 class Library:
@@ -70,12 +76,12 @@ class Library:
                 print(book)
 
 
-user1 = User(0, "Jan", "Kowalski", "123456789")
-user2 = User(1, "John", "Matador", "987654321")
+user1 = User("Jan", "Kowalski", "123456789")
+user2 = User("John", "Matador", "987654321")
 
-book1 = Book(0, "Title1", "Jan Kowalski", 2024, "Horror")
-book2 = Book(1, "Title1", "Jan Kowalski", 2024, "Horror")
-book3 = Book(2, "Title2", "Marek Kobyla", 2023, "Children Stories")
+book1 = Book("Title1", "Jan Kowalski", 2024, "Horror")
+book2 = Book("Title1", "Jan Kowalski", 2024, "Horror")
+book3 = Book("Title2", "Marek Kobyla", 2023, "Children Stories")
 
 library = Library()
 
