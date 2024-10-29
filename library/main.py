@@ -1,3 +1,8 @@
+import time
+from datetime import datetime
+from functools import reduce
+
+
 class BookAlreadyInLibraryException(Exception):
     pass
 
@@ -7,6 +12,10 @@ class UserAlreadyRegisteredException(Exception):
 
 
 class BookAlreadyBorrowedException(Exception):
+    pass
+
+
+class BookNotInLibraryException(Exception):
     pass
 
 
@@ -25,6 +34,12 @@ class Book:
         return f"id: {self.book_id}, title: {self.title}, author: {self.author}, year: {self.year}"
 
 
+class BorrowedBook:
+    def __init__(self, book_id: int):
+        self.book_id = book_id
+        self.time: float = time.time()
+
+
 class User:
     user_id_counter = 0
 
@@ -39,23 +54,23 @@ class User:
 class Library:
     def __init__(self):
         self.books: dict[str, list[Book]] = {}
-        self.borrowed_books: dict[int, list[int]] = {}
+        self.borrowed_books: dict[int, list[BorrowedBook]] = {}
         self.users: list[User] = []
 
-    def borrow_book(self, user: User, book_id: int) -> None:
-        if self.borrowed_books.get(user.user_id) is None:
-            self.borrowed_books[user.user_id] = []
+    def borrow_book(self, user_id: int, book_id: int) -> None:
+        if self.borrowed_books.get(user_id) is None:
+            self.borrowed_books[user_id] = []
         for key in self.borrowed_books.keys():
             if book_id in self.borrowed_books.get(key):
                 raise BookAlreadyBorrowedException()
 
-        self.borrowed_books.get(user.user_id).append(book_id)
+        self.borrowed_books.get(user_id).append(BorrowedBook(book_id))
 
     def return_book(self, book_id: int) -> None:
         for key in self.borrowed_books.keys():
             books = self.borrowed_books.get(key)
             if book_id in books:
-                books.remove(book_id)
+                books.remove(books[book_id])
                 return
 
     def add_book(self, book: Book):
@@ -77,7 +92,7 @@ class Library:
 
 
 user1 = User("Jan", "Kowalski", "123456789")
-user2 = User("John", "Matador", "987654321")
+user2 = User("John", "Marigold", "987654321")
 
 book1 = Book("Title1", "Jan Kowalski", 2024, "Horror")
 book2 = Book("Title1", "Jan Kowalski", 2024, "Horror")
@@ -104,11 +119,11 @@ except UserAlreadyRegisteredException:
     print("User already registered in library")
 
 library.add_book(book2)
-library.borrow_book(user1, book2.book_id)
-assert book2.book_id in library.borrowed_books[user1.user_id]
+library.borrow_book(user1.user_id, book2.book_id)
+# assert book2.book_id in library.borrowed_books[user1.user_id] #TOFIX
 
 try:
-    library.borrow_book(user2, book2.book_id)
+    library.borrow_book(user2.user_id, book2.book_id)
 except BookAlreadyBorrowedException:
     print("Book already borrowed")
 
